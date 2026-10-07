@@ -1,283 +1,248 @@
 # JR Galego Móveis
 
-Vitrine de e-commerce para uma loja de móveis, criada com HTML, CSS e JavaScript sem framework. O projeto demonstra a experiência de navegação e compra e organiza a interface para que ela possa servir de referência visual e estrutural para um futuro tema WordPress com WooCommerce.
+Front-end estático de uma loja virtual de móveis e decoração. O projeto apresenta a marca JR Galego Móveis, vitrines de produtos, navegação por ambientes e categorias, catálogo com filtros, página de detalhes, carrinho demonstrativo e contato pelo WhatsApp.
 
-> **Estado atual:** protótipo front-end estático e funcional para demonstração. Ainda não é um tema WordPress instalável e não realiza vendas, pagamentos, gestão de estoque ou cadastros em serviços externos.
+Foi desenvolvido com HTML semântico, CSS e JavaScript vanilla para validar a experiência visual e de compra no navegador e servir de ponto de partida para um futuro tema WordPress integrado ao WooCommerce. Não é ainda uma loja conectada a pagamentos, estoque, frete ou pedidos reais.
 
 ## Índice
 
-- [Objetivo e foco](#objetivo-e-foco)
+- [Visão geral](#visão-geral)
 - [Como o projeto foi criado](#como-o-projeto-foi-criado)
-- [Tecnologias e recursos utilizados](#tecnologias-e-recursos-utilizados)
+- [Tecnologias, bibliotecas e serviços](#tecnologias-bibliotecas-e-serviços)
 - [Estrutura de arquivos](#estrutura-de-arquivos)
 - [Páginas e seções](#páginas-e-seções)
-- [Como usar e executar](#como-usar-e-executar)
-- [Comportamentos e dados de demonstração](#comportamentos-e-dados-de-demonstração)
-- [Acessibilidade, SEO e desempenho](#acessibilidade-seo-e-desempenho)
-- [Evolução para WordPress e WooCommerce](#evolução-para-wordpress-e-woocommerce)
-- [Limitações e preparativos para publicação](#limitações-e-preparativos-para-publicação)
+- [Como executar](#como-executar)
+- [Dados e funcionalidades demonstrativas](#dados-e-funcionalidades-demonstrativas)
+- [Preparação para WordPress e WooCommerce](#preparação-para-wordpress-e-woocommerce)
+- [Limites atuais e próximos passos](#limites-atuais-e-próximos-passos)
 
-## Objetivo e foco
+## Visão geral
 
-O objetivo é apresentar a JR Galego Móveis como uma loja acolhedora, confiável e comercial, destacando produtos e ambientes residenciais com uma identidade visual própria. A arquitetura de informação — navegação, organização do catálogo e apresentação das ofertas — foi inspirada por padrões comuns de lojas virtuais. Não foram reutilizados código ou elementos proprietários de outros sites.
+O foco do projeto é apresentar uma experiência de compra de móveis clara, responsiva e comercial, valorizando:
 
-As prioridades da interface são:
+- ambientes e produtos por categoria;
+- ofertas, destaques e produtos mais vendidos;
+- imagens e conteúdo editorial para inspirar a escolha;
+- informações úteis sobre produtos;
+- acesso rápido ao atendimento;
+- navegação utilizável em desktop, tablet e celular.
 
-- Ajudar a encontrar produtos por ambiente, categoria ou busca.
-- Dar visibilidade a preços promocionais, parcelamento e produtos em destaque.
-- Facilitar o contato com a loja pelo WhatsApp.
-- Oferecer uma experiência responsiva, com foco em celular e navegação por teclado.
-- Manter dados, estilos e comportamento separados, facilitando a substituição dos exemplos por produtos e serviços reais.
+A identidade visual usa tons neutros, marrom escuro e dourado, com a família tipográfica Inter. O conteúdo e os produtos são dados fictícios para demonstração.
 
 ## Como o projeto foi criado
 
-O front-end foi construído com documentos HTML independentes para a página inicial, o catálogo e o detalhe de produto. As páginas compartilham a mesma estrutura visual de cabeçalho, navegação, rodapé e gaveta do carrinho. O CSS foi dividido por responsabilidade e reunido em um arquivo de entrada. Os registros de produtos mockados foram separados do JavaScript que controla a interface.
+1. A arquitetura das páginas e a experiência da loja foram definidas a partir do briefing em [`docs/plan.md`](docs/plan.md).
+2. A interface foi organizada em três documentos HTML independentes: página inicial, catálogo/categoria e produto.
+3. Os estilos foram separados por responsabilidade e reunidos por um CSS principal.
+4. O catálogo foi colocado em um arquivo JavaScript independente; outro script cria os cards e gerencia as interações da interface.
+5. Imagens de ambientes e produtos foram referenciadas externamente para compor a demonstração.
+6. A marcação foi estruturada para que os blocos visuais e os dados tenham correspondência com templates e entidades do WooCommerce.
 
-Essa divisão permite consultar o protótipo diretamente e também identificar os componentes que poderão ser transformados em templates, partes de template e funções de um tema WordPress.
+Não há etapa de compilação ou empacotamento: o navegador carrega diretamente os arquivos HTML, CSS e JavaScript.
 
-## Tecnologias e recursos utilizados
+## Tecnologias, bibliotecas e serviços
 
-### Base do projeto
+### Tecnologias principais
 
-- **HTML5:** estrutura das páginas, formulários, navegação, conteúdo e acessibilidade.
-- **CSS3:** identidade visual, layouts com Flexbox e Grid, animações, estados de interação e breakpoints responsivos.
-- **JavaScript moderno, sem framework:** renderização dos produtos demonstrativos, busca, filtros, paginação, carrinho, favoritos e interações das páginas.
-- **`localStorage`:** persistência local do carrinho e dos favoritos neste navegador.
-- **`Intl.NumberFormat`:** apresentação de valores na moeda brasileira (`BRL`).
-- **JSON-LD / Schema.org:** dados estruturados para organização, loja, site, produto, oferta e breadcrumb.
+- **HTML5:** páginas, conteúdo semântico, formulários, navegação e atributos `data-*` usados como pontos de integração do JavaScript.
+- **CSS3:** identidade visual, layout com CSS Grid e Flexbox, componentes, estados de interação, animações de transição e breakpoints responsivos.
+- **JavaScript vanilla (ES6+):** catálogo mockado, criação de vitrines, filtros, ordenação, paginação, produto, carrinho, favoritos e feedbacks.
 
-### Serviços e recursos externos
+### Bibliotecas e recursos externos
 
-- **Inter, do Google Fonts:** fonte tipográfica carregada pela internet.
-- **Lucide:** biblioteca de ícones carregada pelo CDN oficial/unpkg.
-- **Unsplash:** fotografias de ambientes e imagens ilustrativas dos produtos, carregadas remotamente.
-- **WhatsApp:** links `wa.me` para iniciar conversas; o número presente no código ainda é demonstrativo.
-- **Instagram:** links para o perfil informado e uma grade visual preparada para substituir as imagens de exemplo por publicações reais.
+- **Inter**, servida pelo Google Fonts, para a tipografia da interface.
+- **Lucide**, carregada por CDN (`unpkg`), para os ícones declarados com `data-lucide`.
+- **Unsplash**, para fotografias de ambientes e móveis.
+- **Schema.org em JSON-LD**, para dados estruturados de organização, loja, site, produto, oferta e breadcrumb.
+- **APIs nativas do navegador:** `localStorage` e `sessionStorage` para persistência local, `Intl.NumberFormat` para formatação de preços e `URLSearchParams` para leitura dos parâmetros de página.
 
-### O que não foi utilizado
-
-- Não há dependências instaladas por npm, bundler ou etapa de compilação.
-- Não há React, Vue, Zustand ou outro framework/gerenciador de estado. O plano menciona Zustand para o carrinho; nesta versão, o carrinho é implementado em JavaScript nativo e salvo no `localStorage`.
-- Não há servidor, API, banco de dados, autenticação, pagamentos, integração WooCommerce ou serviço de newsletter conectado.
-- Não há uma suíte de testes automatizados configurada no repositório.
+Não são usados React, Vue, Angular, Zustand, bibliotecas de componentes, bibliotecas de animação ou dependências instaladas por npm. Apesar de o briefing inicial mencionar Zustand para o carrinho, a implementação existente é em JavaScript vanilla com persistência local.
 
 ## Estrutura de arquivos
 
 ```text
 jrgalegomoveis/
-├── README.md
 ├── index.html
 ├── categoria.html
 ├── produto.html
-├── assets/
-│   ├── css/
-│   │   ├── style.css
-│   │   ├── base.css
-│   │   ├── components.css
-│   │   ├── pages.css
-│   │   └── responsive.css
-│   ├── imgs/
-│   │   └── .gitkeep
-│   └── js/
-│       ├── app.js
-│       └── products.js
-└── docs/
-    └── plan.md
+├── README.md
+├── docs/
+│   └── plan.md
+└── assets/
+    ├── css/
+    │   ├── style.css
+    │   ├── base.css
+    │   ├── components.css
+    │   ├── pages.css
+    │   └── responsive.css
+    ├── imgs/
+    │   └── .gitkeep
+    └── js/
+        ├── products.js
+        └── app.js
 ```
 
-### Páginas HTML
+### CSS: arquivos de estilização
 
-- [`index.html`](index.html): vitrine inicial, conteúdo comercial, navegação, links sociais e dados estruturados gerais.
-- [`categoria.html`](categoria.html): catálogo com filtros, ordenação, paginação, drawer de filtros em telas pequenas e gaveta do carrinho.
-- [`produto.html`](produto.html): estrutura do detalhe do produto, galeria, variações demonstrativas, informações, avaliações e produtos relacionados.
+- [`assets/css/style.css`](assets/css/style.css): ponto de entrada dos estilos; importa `base.css`, `components.css`, `pages.css` e `responsive.css`, nesta ordem. Os parâmetros de versão nas importações ajudam a invalidar cache do navegador.
+- [`assets/css/base.css`](assets/css/base.css): variáveis da identidade visual, regras globais, tipografia, container, cabeçalho, navegação, botões, links, foco e estados básicos.
+- [`assets/css/components.css`](assets/css/components.css): aparência dos componentes compartilhados e das seções da Home, incluindo hero, cards de ambientes e produtos, benefícios, inspiração, newsletter, footer, notificações e drawers.
+- [`assets/css/pages.css`](assets/css/pages.css): estilos específicos do catálogo, filtros, ordenação, paginação, breadcrumb e detalhes do produto.
+- [`assets/css/responsive.css`](assets/css/responsive.css): ajustes para telas menores, adaptação do menu e dos filtros em drawers, grids móveis e larguras compactas.
 
-As páginas incluem marcação própria e carregam os mesmos recursos de CSS e JavaScript. Cabeçalho e rodapé estão repetidos nos documentos estáticos; na implementação WordPress, devem passar a ser componentes compartilhados do tema.
+### JavaScript: arquivos de script
 
-### CSS
-
-[`assets/css/style.css`](assets/css/style.css) é a folha de entrada da interface. Importa as folhas menores na seguinte ordem:
-
-1. [`assets/css/base.css`](assets/css/base.css): variáveis da paleta e tipografia, estilos gerais, cabeçalho, links, botões, containers e componentes básicos. Também define a abertura e a apresentação do mega menu.
-2. [`assets/css/components.css`](assets/css/components.css): hero, cards de ambiente, categorias, cards de produtos, benefícios, inspiração, Instagram, newsletter, rodapé, gaveta do carrinho e botão flutuante do WhatsApp.
-3. [`assets/css/pages.css`](assets/css/pages.css): estilos específicos do catálogo, painel de filtros, paginação, detalhe do produto, galeria e abas de informação.
-4. [`assets/css/responsive.css`](assets/css/responsive.css): adaptações para larguras menores ou iguais a 1050 px, 760 px e 380 px; inclui grades com duas colunas, gavetas e ajustes de tipografia e espaçamento. O menu lateral é compartilhado por desktop, tablet e mobile.
-
-A pasta `assets/imgs/` está preparada para receber arquivos de imagem locais. Atualmente, o `.gitkeep` apenas conserva a pasta no projeto; as imagens visíveis vêm de URLs externas do Unsplash.
-
-### JavaScript
-
-- [`assets/js/products.js`](assets/js/products.js): disponibiliza `window.JRProducts`, uma lista de 20 produtos demonstrativos distribuídos em nove categorias. Cada registro contém dados usados pela interface, como nome, preço, preço anterior, parcelamento, avaliação, categoria, identificador de imagem e descrição. Atributos de marca, cor e material também são preenchidos para demonstrar os filtros.
-- [`assets/js/app.js`](assets/js/app.js): inicializa as páginas, apresenta os produtos e controla busca, filtros, ordenação, paginação, variações visuais, menu, favoritos, mensagens de feedback e carrinho. Também constrói os dados estruturados de produto e breadcrumb na página de produto.
-
-Os registros de `products.js` são somente dados de exemplo. Na loja real, produtos, preços, disponibilidade, variações, imagens e avaliações devem vir do WooCommerce, não de uma lista fixada no navegador.
-
-### Plano de referência
-
-- [`docs/plan.md`](docs/plan.md): escopo original, identidade visual desejada, páginas, seções, funcionalidades e critérios para a futura loja.
+- [`assets/js/products.js`](assets/js/products.js): fonte dos dados de demonstração. Expõe `window.JRProducts`, com 20 produtos e campos como identificador, nome, categoria, preço, parcelamento, avaliação, imagem, estoque, descrição e destaque. Completa marca, cor e material com base na categoria.
+- [`assets/js/app.js`](assets/js/app.js): comportamento da loja. Cria cards e vitrines, renderiza a página do produto, filtra e ordena o catálogo, controla paginação, busca, menu, mega menu, galeria, variações, quantidade, carrinho, favoritos, newsletter, toasts, rolagem preservada entre páginas e JSON-LD.
+- [`assets/imgs/`](assets/imgs/): pasta reservada para imagens locais da marca e do catálogo. No estado atual, contém apenas `.gitkeep`; as fotografias vêm do Unsplash.
 
 ## Páginas e seções
 
 ### Página inicial — `index.html`
 
-1. **Barra superior:** mensagem curta sobre ofertas, pagamento e WhatsApp.
-2. **Cabeçalho:** marca, busca, conta, favoritos e acesso ao carrinho; o botão do menu lateral fica disponível em todos os tamanhos de tela.
-3. **Menu principal:** gaveta lateral com links por ambiente, ofertas e contato; “Móveis” expande os atalhos para categorias. O controle de fechar, clique em um link e a tecla `Escape` fecham o menu.
-4. **Hero:** fotografia de ambiente, mensagem principal e chamadas para compra e WhatsApp.
-5. **Ambientes:** cartões para sala de estar, sala de jantar, quarto, cozinha, escritório e área externa.
-6. **Categorias:** faixa horizontal com categorias como sofás, racks, painéis, mesas, cadeiras, camas, armários e poltronas.
-7. **Ofertas da semana:** cards gerados a partir dos produtos de demonstração com desconto, preço, parcelamento e botão de compra.
-8. **Banner comercial:** imagem e mensagem “Sua casa. Seu estilo.”.
-9. **Produtos em destaque:** grade de produtos marcados como destaque na lista de exemplo.
-10. **Diferenciais:** entrega, pagamento, compra segura, atendimento, seleção de produtos e variedade.
-11. **Inspiração:** cartões de ambientes com links para categorias correspondentes.
-12. **Mais vendidos:** faixa horizontal com produtos marcados como favoritos dos clientes no conjunto demonstrativo.
-13. **Instagram:** grade de seis imagens e link para o perfil; ainda não consome publicações reais.
-14. **Newsletter:** formulário visual com nome, e-mail e WhatsApp.
-15. **Rodapé:** marca, navegação institucional, categorias, atendimento e links sociais.
-16. **WhatsApp flutuante:** atalho para iniciar uma conversa com mensagem pré-preenchida.
-17. **Carrinho lateral:** drawer compartilhado com as demais páginas.
+Apresenta a loja e conduz o visitante da inspiração à consulta dos produtos:
 
-### Página de categoria — `categoria.html`
+1. **Top bar:** avisos de ofertas, pagamento facilitado e atendimento pelo WhatsApp.
+2. **Header:** marca, busca, conta, favoritos e carrinho.
+3. **Navegação principal:** links para Início, Móveis, ambientes, Ofertas e Contato. O item Móveis abre um mega menu com ambientes e categorias procuradas.
+4. **Hero:** fotografia de ambiente residencial, mensagem principal, botão para as ofertas e link para o WhatsApp.
+5. **Ambientes:** cards para sala de estar, sala de jantar, quarto, cozinha, escritório e área externa.
+6. **Categorias de móveis:** faixa rolável de categorias, como Sofás, Racks, Painéis, Mesas, Cadeiras, Camas, Armários e Poltronas.
+7. **Ofertas da semana:** vitrine de produtos com preço anterior, desconto, preço atual e parcelamento.
+8. **Banner editorial:** seção “Sua casa. Seu estilo.”, com chamada para conhecer os produtos.
+9. **Produtos em destaque:** vitrine selecionada do catálogo.
+10. **Diferenciais:** entrega, pagamento facilitado, compra segura, atendimento, seleção de produtos e variedade.
+11. **Inspiração:** cards de ambientes ligados às categorias correspondentes.
+12. **Mais vendidos:** lista horizontal com controles para rolar os produtos.
+13. **Instagram:** grade de seis imagens e chamada para o perfil `@jrgallegomoveis`.
+14. **Newsletter:** formulário demonstrativo com nome, e-mail e WhatsApp.
+15. **Footer:** marca, links institucionais, categorias, atendimento e redes sociais.
+16. **Carrinho drawer e WhatsApp flutuante:** componentes de acesso rápido compartilhados com as outras páginas.
 
-- Breadcrumb e título/descrição atualizados a partir da categoria, busca ou consulta de ofertas.
-- Filtros demonstrativos de categoria, preço, marca, cor, material e disponibilidade.
-- Ordenação por relevância, preço crescente, preço decrescente ou nome.
-- Grade paginada de produtos com nove itens por página.
-- Painel de filtros que se transforma em drawer no celular e estado de resultados vazios.
-- A busca usa o parâmetro `q`; as categorias usam `categoria` e a listagem de ofertas usa `ofertas=1`.
+### Catálogo e categoria — `categoria.html`
 
-### Página de produto — `produto.html`
+Oferece a navegação pelo catálogo de móveis:
 
-- O parâmetro `id` seleciona um registro, por exemplo `produto.html?id=sofa-linho`.
-- Galeria visual com miniaturas e imagem principal.
-- Nome, referência, avaliação, descrição, preço promocional e parcelamento.
-- Seleção visual de cor e quantidade.
-- Botão para adicionar ao carrinho e link para tirar dúvidas pelo WhatsApp.
-- Abas/âncoras de descrição, características, dimensões, entrega, pagamento e avaliações.
-- Grade de produtos relacionados.
+- breadcrumb, título e descrição dinâmicos conforme a categoria ou os parâmetros da URL;
+- busca recebida pelo parâmetro `q` e filtro de ofertas pelo parâmetro `ofertas=1`;
+- filtros por categoria, preço, disponibilidade, marca, cor e material;
+- ordenação por relevância, preço crescente, preço decrescente ou nome;
+- grade de produtos com contador de resultados e paginação de nove itens;
+- drawer de filtros em telas pequenas e estado de resultados vazios.
 
-As variações, medidas, avaliações e características são demonstrações de interface: não correspondem a variações ou dados validados no WooCommerce.
+Os links de categoria usam URLs de demonstração, por exemplo `categoria.html?categoria=Sofás`.
 
-## Como usar e executar
+### Detalhe do produto — `produto.html`
 
-O projeto não precisa de instalação de dependências. Abra `index.html` diretamente no navegador ou, preferencialmente, inicie um servidor HTTP local na raiz do projeto para testar links e navegação entre páginas.
+Apresenta um produto carregado a partir do parâmetro `id` da URL, por exemplo `produto.html?id=sofa-linho`:
 
-Por exemplo, com Python instalado:
+- breadcrumb e galeria com miniaturas;
+- nome, referência, avaliação, descrição, preço, desconto e parcelamento;
+- seleção demonstrativa de cor e controle de quantidade;
+- botão para adicionar ao carrinho e acesso ao WhatsApp;
+- informações de entrega e pagamento;
+- abas/âncoras de descrição, características, entrega e avaliações;
+- vitrine de produtos relacionados;
+- JSON-LD de produto, oferta e `BreadcrumbList`, preenchido com dados mockados.
+
+### Componentes compartilhados
+
+O header, a navegação, o rodapé, o carrinho lateral, notificações e o botão flutuante de WhatsApp seguem o mesmo padrão nas três páginas para facilitar a extração futura em partes reutilizáveis de tema.
+
+## Como executar
+
+O projeto é estático e não precisa de instalação de dependências. Recomenda-se servir os arquivos por HTTP local para evitar restrições do navegador ao abrir páginas diretamente pelo sistema de arquivos.
+
+### Windows com Python
+
+No PowerShell, a partir da pasta `jrgalegomoveis`:
 
 ```powershell
 python -m http.server 8000
 ```
 
-Depois, acesse <http://localhost:8000/>. O comando usa o servidor estático simples do Python; não representa um servidor de produção. Também é possível usar uma extensão de servidor local do editor.
+Abra `http://localhost:8000/` no navegador. Para interromper o servidor, use `Ctrl+C`.
 
-Para verificar sintaxe dos scripts com Node.js, se estiver disponível:
+### Windows com Node.js
+
+Se preferir usar Node.js e tiver o pacote disponível:
 
 ```powershell
-node --check assets/js/app.js
-node --check assets/js/products.js
+npx serve .
 ```
 
-As chamadas a fontes, ícones e imagens externas dependem de conexão com a internet.
+Abra o endereço local indicado no terminal. Não existe um script `npm run` configurado neste projeto.
 
-## Comportamentos e dados de demonstração
+## Dados e funcionalidades demonstrativas
 
-- **Catálogo:** a busca por nome/categoria, filtros, ordenação e paginação operam sobre os 20 registros locais.
-- **Carrinho:** permite adicionar itens, alterar quantidades, remover produtos e ver subtotal. Os dados ficam no `localStorage` do navegador.
-- **Favoritos:** alterna o estado de favorito dos cards e salva a seleção localmente.
-- **Feedback:** mensagens aparecem após adicionar/remover itens e após o envio demonstrativo do formulário.
-- **Newsletter:** valida campos obrigatórios no navegador, mostra uma confirmação local e limpa o formulário; não envia os dados para lugar algum.
-- **Finalização:** o botão apresenta uma mensagem informando que a integração depende do WooCommerce; não efetua checkout.
-- **Menu, gavetas e carrosséis:** interações simples em JavaScript nativo; não dependem de um framework.
+- Os 20 produtos estão em `window.JRProducts`; os grupos “ofertas”, “destaques”, “mais vendidos” e “relacionados” são derivados dessa lista por sinalizadores e atributos.
+- Os cards são montados em JavaScript a partir dos dados, em vez de manter cópias manuais de cada produto em cada vitrine.
+- O catálogo aplica filtros e ordenação no navegador e divide os resultados em páginas de nove itens.
+- O carrinho e os favoritos são guardados no `localStorage` do navegador com as chaves `jr-galego-cart` e `jr-galego-favorites`.
+- O último ponto de rolagem antes de algumas navegações é guardado temporariamente em `sessionStorage`.
+- Os preços são formatados em reais com `Intl.NumberFormat("pt-BR", ...)`.
+- As imagens, a fonte e os ícones dependem de serviços externos e de conexão com a internet.
 
-O `localStorage` não sincroniza dispositivos, não valida estoque, não calcula frete e não deve substituir o carrinho transacional do WooCommerce.
+### O que ainda é apenas demonstração
 
-## Acessibilidade, SEO e desempenho
+- **Checkout:** não cria pedidos nem realiza pagamento; mostra uma mensagem informando que a finalização será conectada ao WooCommerce.
+- **Frete e entrega:** não há consulta real de CEP, transportadora, região ou prazo.
+- **Newsletter:** o envio é interceptado no navegador e apresenta confirmação visual; não salva nem envia o cadastro a um serviço.
+- **Conta e avaliações:** não há autenticação de cliente nem sistema de avaliações conectado.
+- **WhatsApp:** os links usam atualmente `5500000000000` como número provisório. Substitua-o pelo telefone oficial antes de publicar.
+- **Produtos, preços, estoque, avaliações e metadados:** são fictícios e não devem ser tratados como dados reais de venda.
+- **Cores e materiais:** são atributos ilustrativos atribuídos pelo grupo de categoria em `products.js`, não variações reais específicas de cada item.
 
-### Acessibilidade
+## Preparação para WordPress e WooCommerce
 
-Há textos alternativos nas imagens de conteúdo, rótulos de formulário, nomes acessíveis para botões e links de ícone, link para pular ao conteúdo, regiões de navegação identificadas, foco visível, mensagens com `aria-live` e suporte à tecla `Escape` para fechar drawers e menu. Ainda é recomendável executar uma auditoria com leitor de tela e ferramenta automatizada após os ajustes de conteúdo reais.
+A estrutura separa páginas, estilos, comportamento e catálogo mockado, permitindo substituir progressivamente os dados e o shell estático pelos recursos do WordPress. A integração de tema e WooCommerce ainda não foi implementada.
 
-### SEO e dados estruturados
+### Mapeamento recomendado para o tema
 
-- As páginas incluem idioma, título e descrição.
-- A página inicial declara `Organization`, `FurnitureStore` e `WebSite` via JSON-LD.
-- O detalhe de produto gera `Product`, `Offer` e `BreadcrumbList`.
-- O catálogo declara breadcrumb.
+| Estrutura atual | Destino recomendado |
+| --- | --- |
+| `index.html` | `front-page.php`, com as seções da Home e chamadas a template parts |
+| Header repetido nas páginas | `header.php` e partes para busca, navegação e mega menu |
+| Footer repetido nas páginas | `footer.php` |
+| Cards gerados por `productCard()` em `app.js` | template part de produto, por exemplo `template-parts/product-card.php` |
+| `categoria.html` | `archive-product.php` ou `taxonomy-product_cat.php` |
+| `produto.html` | `single-product.php` ou templates WooCommerce sobrescritos com parcimônia |
+| `assets/css/` e `assets/js/` | arquivos versionados/enfileirados por `functions.php` com `wp_enqueue_style()` e `wp_enqueue_script()` |
+| `products.js` | produtos cadastrados no WooCommerce, recuperados pelos loops e APIs do WordPress |
+| filtros feitos em JavaScript | taxonomias, atributos e filtros do WooCommerce; manter JS para drawer e melhorias progressivas |
+| carrinho no `localStorage` | carrinho de sessão do WooCommerce, mantendo a interface do drawer e conectando suas ações aos endpoints/hooks corretos |
+| JSON-LD atual | dados estruturados e metadados gerados pelo WordPress/WooCommerce ou pelo plugin SEO escolhido, sem duplicidade |
 
-O tipo `LocalBusiness` citado no plano não está incluído atualmente. Endereço, telefone, URLs oficiais, preços e outros dados estruturados precisam ser confirmados antes da publicação. A estrutura da página de catálogo também não substitui uma estratégia completa de SEO técnico em WordPress.
+### Melhor forma de aproveitar a estrutura
 
-### Desempenho
+1. **Criar primeiro o tema e o shell compartilhado:** mover cabeçalho e rodapé para `header.php` e `footer.php`; registrar menus no WordPress e manter cada seção da Home em template part.
+2. **Converter os templates visuais sem reescrever os estilos:** começar pelo catálogo e produto, substituindo o HTML demonstrativo pelos hooks e loops do WooCommerce. Preservar classes CSS quando a semântica permitir.
+3. **Manter um único componente de card:** converter o card gerado em JavaScript para um template PHP reutilizável que receba o produto WooCommerce atual e apresente preço, preço promocional, estoque, imagem, link e botão reais.
+4. **Migrar os produtos mockados para o painel:** cadastrar produtos, categorias, atributos globais e variações no WooCommerce. Preço, estoque, marca, material, cor, medidas e galeria devem vir desses dados, não de `products.js`.
+5. **Trocar filtros demonstrativos por consultas reais:** usar as categorias, atributos e disponibilidade do catálogo; confirmar se cada filtro atual está ligado ao dado apropriado antes de ligar ao front-end.
+6. **Conectar carrinho e checkout:** substituir as gravações em `localStorage` por operações de carrinho do WooCommerce e renderizar o subtotal/quantidades retornados pela loja.
+7. **Integrar serviços operacionais:** configurar número real de WhatsApp, gateway de pagamento, cálculo de frete, newsletter e política de troca.
+8. **Escolher uma única fonte de SEO estruturado:** remover ou adaptar o JSON-LD estático quando WooCommerce ou plugin SEO passar a gerar os schemas, evitando dados duplicados ou divergentes.
+9. **Revisar desempenho e publicação:** hospedar imagens localmente ou em CDN otimizada, revisar licenças e disponibilidade dos ativos, configurar cache, URLs permanentes e testar todos os breakpoints e fluxos reais de compra.
 
-O projeto usa imagens com `loading="lazy"` fora das áreas prioritárias e apresenta grades e layouts com Flexbox/Grid. As fotografias, a fonte e a biblioteca de ícones são recursos remotos; isso exige conexão e traz dependência da disponibilidade de terceiros. Para a loja publicada, prefira imagens otimizadas na biblioteca de mídia, tamanhos responsivos e carregamento gerenciado pelo WordPress.
+### Cuidados de integração
 
-## Evolução para WordPress e WooCommerce
+- Usar as páginas HTML como referência visual, não como arquivos PHP a serem incluídos diretamente no WordPress.
+- Enfileirar estilos e scripts pelo WordPress; não inserir os `<link>` e `<script>` atuais manualmente nos templates.
+- Remover o cache-busting manual `?v=...` e aplicar versões definidas pelo tema, por exemplo com `filemtime()` no desenvolvimento.
+- Tratar produtos e conteúdo como dados externos confiáveis do WooCommerce, escapando valores e URLs no PHP com as funções apropriadas.
+- Substituir caminhos `.html` por links gerados pelas APIs do WordPress e pelas URLs permanentes dos produtos.
+- Não manter `localStorage` como fonte de verdade do carrinho quando a loja estiver integrada.
+- Confirmar que scripts e estilos carregam apenas nas páginas em que são necessários e que a navegação continua funcional sem JavaScript não essencial.
 
-O melhor aproveitamento da estrutura é preservar a identidade visual e os padrões de interface e substituir progressivamente os dados e operações demonstrativos pelos recursos nativos do CMS e do WooCommerce. Não é necessário reescrever o visual como um aplicativo JavaScript.
+## Limites atuais e próximos passos
 
-### 1. Criar a estrutura de um tema
+Este repositório é uma demonstração de interface, não uma instalação WordPress ou WooCommerce. Não inclui tema PHP, `functions.php`, banco de dados, API, checkout, gateway, gestão de produtos, imagens locais, pipeline de build ou testes automatizados configurados.
 
-O projeto ainda não contém os arquivos obrigatórios de um tema WordPress. Em uma nova etapa:
+Antes de disponibilizar a loja ao público:
 
-- Transforme a raiz em um diretório de tema, com um `style.css` na raiz contendo o cabeçalho de metadados exigido pelo WordPress. A folha atual `assets/css/style.css` é o ponto de entrada visual, mas **não** substitui esse arquivo de identificação do tema.
-- Crie `functions.php` para registrar suporte a WooCommerce, imagens destacadas, logo personalizado, menus e carregamento de CSS/JavaScript.
-- Enfileire `assets/css/style.css` e os scripts com `wp_enqueue_style()` e `wp_enqueue_script()`. Use a versão do tema ou a data de modificação do arquivo para cache; remova os parâmetros manuais `?v=...` usados durante o desenvolvimento.
-- Reaproveite as folhas dentro de `assets/css/` e os componentes existentes como base do design system.
-
-Uma organização possível, a ajustar à necessidade do tema:
-
-```text
-jr-galego-moveis/
-├── style.css
-├── functions.php
-├── header.php
-├── footer.php
-├── front-page.php
-├── archive-product.php
-├── taxonomy-product_cat.php
-├── single-product.php
-├── template-parts/
-│   ├── product-card.php
-│   ├── home/
-│   └── product/
-└── assets/
-    ├── css/
-    ├── js/
-    └── imgs/
-```
-
-### 2. Transformar páginas e elementos em templates
-
-- **Página inicial:** migrar as seções de `index.html` para `front-page.php` e partes em `template-parts/home/`.
-- **Estrutura compartilhada:** extrair o cabeçalho e o rodapé repetidos para `header.php`, `footer.php` e partes reutilizáveis para o mega menu, newsletter e carrinho.
-- **Catálogo e categoria:** substituir o array local por loops de produtos e taxonomias do WooCommerce em `archive-product.php` e `taxonomy-product_cat.php`.
-- **Produto:** utilizar `single-product.php` ou os hooks e partes de template do WooCommerce para mostrar produto simples/variável, galeria, atributos, preço, estoque, avaliação e formulário oficial de compra.
-- **Card de produto:** adaptar o HTML de `productCard()` para um template parcial PHP, usando campos reais, URLs do WordPress e APIs do WooCommerce.
-
-### 3. Conectar produtos, carrinho e checkout
-
-- Importar os produtos do mock para o catálogo do WooCommerce, preservando identificadores, categorias, preços, imagens e descrições onde os dados comerciais forem confirmados.
-- Usar o carrinho, cálculo de frete, estoque, cupons e sessões do WooCommerce. Substituir as funções de carrinho locais e o armazenamento `jr-galego-cart` pelas rotas e mecanismos suportados pelo WooCommerce, inclusive para atualização dinâmica quando necessária.
-- Fazer o botão de compra adicionar o produto e a variação selecionada ao carrinho real. Direcionar a finalização para o checkout do WooCommerce, no lugar do aviso demonstrativo.
-- Usar os atributos e variações reais do produto; a seleção visual atual não confirma estoque, preço ou SKU de uma variação.
-- Decidir separadamente como implementar favoritos, por exemplo com plugin compatível ou recurso associado à conta do cliente.
-
-### 4. Conectar os serviços e conteúdo
-
-- Ligar a newsletter a uma plataforma de e-mail ou endpoint com consentimento e política de privacidade apropriados.
-- Substituir o telefone de exemplo em todos os links de WhatsApp e revisar o perfil social, domínio e URLs institucionais.
-- Trocar as imagens remotas demonstrativas por fotografias aprovadas da loja, adicionadas à biblioteca do WordPress. Criar os textos alternativos a partir do conteúdo real.
-- Tornar banners, ambientes e textos administráveis pelo WordPress se a equipe precisar atualizá-los sem editar o tema.
-- Verificar se um plugin de SEO já produz schemas de produto e organização; evitar publicar JSON-LD duplicado.
-
-## Limitações e preparativos para publicação
-
-Antes de usar a loja publicamente, revise e conecte os itens abaixo:
-
-- Substituir `5500000000000` pelo número de WhatsApp correto em todos os links.
-- Confirmar o domínio declarado no JSON-LD e os endereços do Instagram e demais redes.
-- Remover ou preencher links provisórios `#` (conta, políticas, entrega, trocas e conteúdo institucional).
-- Confirmar preços, parcelamento, estoque, categorias, marcas, materiais, cores, avaliações e especificações dos produtos.
-- Substituir imagens demonstrativas do Unsplash por imagens autorizadas e aprovadas para os produtos e ambientes da loja.
-- Integrar newsletter, cálculo de entrega, formas de pagamento, carrinho e checkout a serviços reais.
-- Definir política de privacidade, consentimento de newsletter, informações comerciais e condições de entrega/troca.
-- Implementar e validar o tema WordPress/WooCommerce; o protótipo atual não pode ser instalado como tema e não armazena pedidos.
+1. substituir produtos, preços, estoque e imagens de exemplo por conteúdo autorizado e real;
+2. informar o WhatsApp, as políticas e as condições comerciais verdadeiras;
+3. implementar e testar checkout, frete, pagamento, cadastro e privacidade;
+4. converter e validar os templates no WordPress/WooCommerce, em desktop e mobile;
+5. verificar SEO, acessibilidade, desempenho e comportamento em navegadores suportados.
