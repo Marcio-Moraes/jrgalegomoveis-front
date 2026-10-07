@@ -100,7 +100,7 @@ As páginas incluem marcação própria e carregam os mesmos recursos de CSS e J
 1. [`assets/css/base.css`](assets/css/base.css): variáveis da paleta e tipografia, estilos gerais, cabeçalho, links, botões, containers e componentes básicos. Também define a abertura e a apresentação do mega menu.
 2. [`assets/css/components.css`](assets/css/components.css): hero, cards de ambiente, categorias, cards de produtos, benefícios, inspiração, Instagram, newsletter, rodapé, gaveta do carrinho e botão flutuante do WhatsApp.
 3. [`assets/css/pages.css`](assets/css/pages.css): estilos específicos do catálogo, painel de filtros, paginação, detalhe do produto, galeria e abas de informação.
-4. [`assets/css/responsive.css`](assets/css/responsive.css): adaptações para larguras menores ou iguais a 1050 px, 760 px e 380 px; inclui navegação mobile, grades com duas colunas, gavetas e ajustes de tipografia e espaçamento.
+4. [`assets/css/responsive.css`](assets/css/responsive.css): adaptações para larguras menores ou iguais a 1050 px, 760 px e 380 px; inclui grades com duas colunas, gavetas e ajustes de tipografia e espaçamento. O menu lateral é compartilhado por desktop, tablet e mobile.
 
 A pasta `assets/imgs/` está preparada para receber arquivos de imagem locais. Atualmente, o `.gitkeep` apenas conserva a pasta no projeto; as imagens visíveis vêm de URLs externas do Unsplash.
 
@@ -120,8 +120,8 @@ Os registros de `products.js` são somente dados de exemplo. Na loja real, produ
 ### Página inicial — `index.html`
 
 1. **Barra superior:** mensagem curta sobre ofertas, pagamento e WhatsApp.
-2. **Cabeçalho:** marca, busca, conta, favoritos e acesso ao carrinho; em telas pequenas, menu, busca compacta e carrinho.
-3. **Menu principal:** links por ambiente, ofertas e contato; o item “Móveis” abre um mega menu em desktop.
+2. **Cabeçalho:** marca, busca, conta, favoritos e acesso ao carrinho; o botão do menu lateral fica disponível em todos os tamanhos de tela.
+3. **Menu principal:** gaveta lateral com links por ambiente, ofertas e contato; “Móveis” expande os atalhos para categorias. O controle de fechar, clique em um link e a tecla `Escape` fecham o menu.
 4. **Hero:** fotografia de ambiente, mensagem principal e chamadas para compra e WhatsApp.
 5. **Ambientes:** cartões para sala de estar, sala de jantar, quarto, cozinha, escritório e área externa.
 6. **Categorias:** faixa horizontal com categorias como sofás, racks, painéis, mesas, cadeiras, camas, armários e poltronas.
@@ -281,4 +281,3 @@ Antes de usar a loja publicamente, revise e conecte os itens abaixo:
 - Integrar newsletter, cálculo de entrega, formas de pagamento, carrinho e checkout a serviços reais.
 - Definir política de privacidade, consentimento de newsletter, informações comerciais e condições de entrega/troca.
 - Implementar e validar o tema WordPress/WooCommerce; o protótipo atual não pode ser instalado como tema e não armazena pedidos.
-

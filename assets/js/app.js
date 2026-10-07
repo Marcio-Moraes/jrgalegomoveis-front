@@ -5,6 +5,7 @@
   const money = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
   const cartKey = "jr-galego-cart";
   const favoriteKey = "jr-galego-favorites";
+  const navigationScrollKey = "jr-galego-navigation-scroll";
   const categoryNames = ["Sofás", "Racks", "Painéis", "Mesas", "Cadeiras", "Camas", "Guarda-roupas", "Poltronas", "Armários"];
   let cart = readStorage(cartKey, []);
   let favorites = readStorage(favoriteKey, []);
@@ -65,6 +66,36 @@
     script.type = "application/ld+json";
     script.textContent = JSON.stringify(data);
     document.head.append(script);
+  }
+
+  function rememberNavigationScroll(destination) {
+    if (destination.origin !== window.location.origin || destination.hash) return;
+    try {
+      sessionStorage.setItem(navigationScrollKey, JSON.stringify({
+        destination: `${destination.pathname}${destination.search}`,
+        scrollY: window.scrollY
+      }));
+    } catch (error) {
+      console.error("Não foi possível preservar a posição da página.", error);
+    }
+  }
+
+  function restoreNavigationScroll() {
+    let savedPosition;
+    try {
+      savedPosition = JSON.parse(sessionStorage.getItem(navigationScrollKey) || "null");
+      sessionStorage.removeItem(navigationScrollKey);
+    } catch (error) {
+      console.error("Não foi possível recuperar a posição da página.", error);
+      return;
+    }
+    if (!savedPosition || savedPosition.destination !== `${window.location.pathname}${window.location.search}`) return;
+    const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, Math.max(0, Number(savedPosition.scrollY) || 0));
+    requestAnimationFrame(() => {
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+    });
   }
 
   function productCard(product) {
@@ -248,6 +279,11 @@
     if (drawer) drawer.setAttribute("aria-hidden", "true");
   }
 
+  function closeMenu() {
+    document.body.classList.remove("menu-open");
+    document.querySelectorAll("[data-menu-toggle]").forEach((button) => button.setAttribute("aria-expanded", "false"));
+  }
+
   function updateCart(id, delta) {
     const item = cart.find((entry) => entry.id === id);
     if (!item) return;
@@ -290,6 +326,24 @@
     document.addEventListener("click", (event) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
+      const link = target.closest(".site-header a[href], .breadcrumbs a[href]");
+      if (!link || link.hasAttribute("download") || (link.target && link.target !== "_self")) return;
+      rememberNavigationScroll(new URL(link.href, window.location.href));
+    }, true);
+
+    document.querySelector(".site-header .search-form")?.addEventListener("submit", (event) => {
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement) || form.method.toLowerCase() !== "get") return;
+      const destination = new URL(form.action, window.location.href);
+      new FormData(form).forEach((value, name) => {
+        if (typeof value === "string") destination.searchParams.set(name, value);
+      });
+      rememberNavigationScroll(destination);
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
       const add = target.closest("[data-add-cart]");
       if (add) {
         const quantity = add.hasAttribute("data-detail-buy") ? Number(document.querySelector("[data-product-quantity]").textContent) : 1;
@@ -312,13 +366,18 @@
       if (target.closest("[data-menu-toggle]")) {
         const open = document.body.classList.toggle("menu-open");
         target.closest("[data-menu-toggle]").setAttribute("aria-expanded", String(open));
+      } else if (target.closest("[data-menu-close]")) {
+        closeMenu();
+      } else if (document.body.classList.contains("menu-open") && (!target.closest(".main-nav") || target.closest(".main-nav a"))) {
+        closeMenu();
       }
       if (target.closest(".mobile-search-toggle")) document.body.classList.toggle("search-open");
       if (target.closest("[data-filter-open]")) document.body.classList.add("filters-open");
       if (target.closest("[data-filter-close]")) document.body.classList.remove("filters-open");
-      const pageButton = target.closest("[data-page]");
-      if (pageButton) {
-        catalogState.page = Number(pageButton.dataset.page);
+      const pageButton = target.closest(".pagination [data-page]");
+      const pageNumber = pageButton ? Number(pageButton.dataset.page) : NaN;
+      if (Number.isInteger(pageNumber) && pageNumber > 0) {
+        catalogState.page = pageNumber;
         renderCatalog();
         document.querySelector(".catalog-toolbar")?.scrollIntoView({ behavior: "smooth", block: "start" });
       }
@@ -396,7 +455,8 @@
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         closeCart();
-        document.body.classList.remove("filters-open", "menu-open", "search-open");
+        document.body.classList.remove("filters-open", "search-open");
+        closeMenu();
       }
     });
   }
@@ -425,6 +485,7 @@
     initMegaMenus();
     initNewsletter();
     icons();
+    restoreNavigationScroll();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

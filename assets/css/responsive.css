@@ -31,16 +31,6 @@
  .account-link,.favorite-action{display:none}
  .header-action.cart-action{font-size:0}
  .header-cart-icon>svg{width:20px;height:20px}
- .main-nav{position:fixed;z-index:90;top:97px;bottom:0;left:0;width:min(340px,86vw);overflow:auto;border:0;background:#fff;box-shadow:var(--shadow);transform:translateX(-105%);transition:transform .25s}
- .menu-open .main-nav{transform:translateX(0)}
- .main-nav:after{position:fixed;z-index:-1;inset:-97px -100vw 0 0;content:"";background:rgba(25,20,17,.4);opacity:0;visibility:hidden;transition:.25s}
- .menu-open .main-nav:after{opacity:1;visibility:visible}
- .nav-inner{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:10px 20px}
- .nav-inner>a{min-height:47px;border-bottom:1px solid var(--border);font-size:12px}
- .nav-inner>a svg{margin-left:auto}
- .nav-mega-wrap{display:block;width:100%;min-height:0;border-bottom:1px solid var(--border)}
- .nav-mega-trigger{min-height:47px;justify-content:space-between;font-size:12px}
- .nav-mega-wrap .mega-menu{display:none}
  .section-heading{align-items:flex-end;gap:12px;margin-bottom:22px}
  .section-heading h2{font-size:27px}
  .section-heading p{font-size:11px}
