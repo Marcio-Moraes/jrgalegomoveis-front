@@ -4,8 +4,8 @@
  .header-actions{gap:14px}
  .header-action{font-size:0}
  .header-action>svg,.header-cart-icon>svg{width:21px;height:21px}
- .nav-inner{gap:13px}
- .nav-inner>a{font-size:10px}
+ .main-nav .nav-inner{gap:13px}
+ .main-nav .nav-inner>a{font-size:10px}
  .category-list>a{min-width:100px}
  .product-grid{gap:24px 13px}
  .footer-main{gap:28px}
@@ -31,6 +31,7 @@
  .account-link,.favorite-action{display:none}
  .header-action.cart-action{font-size:0}
  .header-cart-icon>svg{width:20px;height:20px}
+ .main-nav{display:none}
  .section-heading{align-items:flex-end;gap:12px;margin-bottom:22px}
  .section-heading h2{font-size:27px}
  .section-heading p{font-size:11px}

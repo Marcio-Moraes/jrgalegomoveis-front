@@ -103,8 +103,8 @@ jrgalegomoveis/
 Apresenta a loja e conduz o visitante da inspiração à consulta dos produtos:
 
 1. **Top bar:** avisos de ofertas, pagamento facilitado e atendimento pelo WhatsApp.
-2. **Header:** marca, busca, conta, favoritos e carrinho.
-3. **Navegação principal:** links para Início, Móveis, ambientes, Ofertas e Contato. O item Móveis abre um mega menu com ambientes e categorias procuradas.
+2. **Header:** marca, busca, conta, favoritos e carrinho; o botão hamburger abre uma gaveta lateral.
+3. **Navegação principal:** no desktop, os links para Início, Móveis, ambientes, Ofertas e Contato permanecem visíveis na faixa abaixo do cabeçalho, enquanto o hamburger abre uma gaveta lateral independente. No mobile, a faixa é ocultada e a gaveta continua disponível. O item Móveis expande um mega menu com ambientes e categorias procuradas.
 4. **Hero:** fotografia de ambiente residencial, mensagem principal, botão para as ofertas e link para o WhatsApp.
 5. **Ambientes:** cards para sala de estar, sala de jantar, quarto, cozinha, escritório e área externa.
 6. **Categorias de móveis:** faixa rolável de categorias, como Sofás, Racks, Painéis, Mesas, Cadeiras, Camas, Armários e Poltronas.

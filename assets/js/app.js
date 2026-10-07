@@ -281,6 +281,8 @@
 
   function closeMenu() {
     document.body.classList.remove("menu-open");
+    const drawer = document.querySelector("[data-side-menu-drawer]");
+    if (drawer) drawer.setAttribute("aria-hidden", "true");
     document.querySelectorAll("[data-menu-toggle]").forEach((button) => button.setAttribute("aria-expanded", "false"));
   }
 
@@ -322,11 +324,30 @@
     });
   }
 
+  function initMenuDrawer() {
+    const source = document.querySelector(".main-nav .nav-inner");
+    if (!source) return;
+
+    const drawer = document.createElement("nav");
+    drawer.className = "side-menu-drawer";
+    drawer.id = "side-menu-drawer";
+    drawer.setAttribute("aria-label", "Menu lateral");
+    drawer.setAttribute("aria-hidden", "true");
+    drawer.dataset.sideMenuDrawer = "";
+
+    const menu = source.cloneNode(true);
+    menu.classList.remove("container");
+    menu.classList.add("side-menu-inner");
+    drawer.append(menu);
+    document.body.append(drawer);
+    document.querySelectorAll("[data-menu-toggle]").forEach((button) => button.setAttribute("aria-controls", drawer.id));
+  }
+
   function initEvents() {
     document.addEventListener("click", (event) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
-      const link = target.closest(".site-header a[href], .breadcrumbs a[href]");
+      const link = target.closest(".site-header a[href], .side-menu-drawer a[href], .breadcrumbs a[href]");
       if (!link || link.hasAttribute("download") || (link.target && link.target !== "_self")) return;
       rememberNavigationScroll(new URL(link.href, window.location.href));
     }, true);
@@ -366,9 +387,10 @@
       if (target.closest("[data-menu-toggle]")) {
         const open = document.body.classList.toggle("menu-open");
         target.closest("[data-menu-toggle]").setAttribute("aria-expanded", String(open));
+        document.querySelector("[data-side-menu-drawer]")?.setAttribute("aria-hidden", String(!open));
       } else if (target.closest("[data-menu-close]")) {
         closeMenu();
-      } else if (document.body.classList.contains("menu-open") && (!target.closest(".main-nav") || target.closest(".main-nav a"))) {
+      } else if (document.body.classList.contains("menu-open") && (!target.closest(".side-menu-drawer") || target.closest(".side-menu-drawer a"))) {
         closeMenu();
       }
       if (target.closest(".mobile-search-toggle")) document.body.classList.toggle("search-open");
@@ -481,6 +503,7 @@
     renderProductDetail();
     renderCatalog();
     renderCart();
+    initMenuDrawer();
     initEvents();
     initMegaMenus();
     initNewsletter();
